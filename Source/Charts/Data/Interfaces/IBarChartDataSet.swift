@@ -39,4 +39,10 @@ public protocol IBarChartDataSet: IBarLineScatterCandleBubbleChartDataSet
     
     /// array of labels used to describe the different values of the stacked bars
     var stackLabels: [String] { get set }
+
+    /// if non-zero, bars will be rounded according to `cornerRoundingValue` style.
+    var cornerRoundingValue: CGFloat { get set }
+
+    /// used in conjunction with `cornerRoundingStyle` to round bar corners.
+    var cornerRoundingStyle: UIRectCorner { get set }
 }

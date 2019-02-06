@@ -308,9 +308,14 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 _barShadowRectBuffer.origin.y = viewPortHandler.contentTop
                 _barShadowRectBuffer.size.height = viewPortHandler.contentHeight
-                
+
+                let path = UIBezierPath(
+                    roundedRect: _barShadowRectBuffer,
+                    byRoundingCorners: dataSet.cornerRoundingStyle,
+                    cornerRadii: CGSize(width: dataSet.cornerRoundingValue,
+                                        height: dataSet.cornerRoundingValue))
                 context.setFillColor(dataSet.barShadowColor.cgColor)
-                context.fill(_barShadowRectBuffer)
+                path.fill()
             }
         }
 
@@ -332,9 +337,14 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 {
                     break
                 }
-                
+
+                let path = UIBezierPath(
+                    roundedRect: barRect,
+                    byRoundingCorners: dataSet.cornerRoundingStyle,
+                    cornerRadii: CGSize(width: dataSet.cornerRoundingValue,
+                                        height: dataSet.cornerRoundingValue))
                 context.setFillColor(dataSet.barShadowColor.cgColor)
-                context.fill(barRect)
+                path.fill()
             }
         }
         
@@ -368,8 +378,13 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 // Set the color for the currently drawn value. If the index is out of bounds, reuse colors.
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
-            
-            context.fill(barRect)
+
+            let path = UIBezierPath(
+                roundedRect: barRect,
+                byRoundingCorners: dataSet.cornerRoundingStyle,
+                cornerRadii: CGSize(width: dataSet.cornerRoundingValue,
+                                    height: dataSet.cornerRoundingValue))
+            path.fill()
             
             if drawBorder
             {

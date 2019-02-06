@@ -15,6 +15,8 @@ import CoreGraphics
 open class CombinedChartRenderer: DataRenderer
 {
     @objc open weak var chart: CombinedChartView?
+
+    @objc open var roundBars: CGFloat = 0.0
     
     /// if set to true, all values are drawn above their bars, instead of below their top
     @objc open var drawValueAboveBarEnabled = true

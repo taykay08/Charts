@@ -136,6 +136,12 @@ open class BarChartDataSet: BarLineScatterCandleBubbleChartDataSet, IBarChartDat
     open var stackLabels: [String] = []
     
     // MARK: - Styling functions and accessors
+
+    /// if non-zero, bars will be rounded according to `cornerRoundingValue` style.
+    open var cornerRoundingValue: CGFloat = 0.0
+
+    /// used in conjunction with `cornerRoundingStyle` to round bar corners.
+    open var cornerRoundingStyle: UIRectCorner = .allCorners
     
     /// the color used for drawing the bar-shadows. The bar shadows is a surface behind the bar that indicates the maximum value
     open var barShadowColor = NSUIColor(red: 215.0/255.0, green: 215.0/255.0, blue: 215.0/255.0, alpha: 1.0)
