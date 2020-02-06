@@ -841,8 +841,8 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
     {
         let currentTime = CACurrentMediaTime()
         
-        _decelerationVelocity.x *= self.dragDecelerationFrictionCoef
-        _decelerationVelocity.y *= self.dragDecelerationFrictionCoef
+        _decelerationVelocity.x *= !self.dragXEnabled ? 0 : self.dragDecelerationFrictionCoef
+        _decelerationVelocity.y *= !self.dragYEnabled ? 0 : self.dragDecelerationFrictionCoef
         
         let timeInterval = CGFloat(currentTime - _decelerationLastTime)
         
