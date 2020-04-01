@@ -361,7 +361,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
 
         for j in stride(from: 0, to: buffer.rects.count, by: 1)
         {
-            let barRect = buffer.rects[j]
+            var barRect = buffer.rects[j]
 
             if (!viewPortHandler.isInBoundsLeft(barRect.origin.x + barRect.size.width))
             {
@@ -379,9 +379,39 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
 
+            // when stacked, middle stacks should not be rounded
+            var roundingStyle = dataSet.cornerRoundingStyle
+            if isStacked, dataSet.cornerRoundingValue > 0 {
+                if dataSet.stackSize > 1 {
+                    let half = dataSet.stackSpacing / 2
+                    if j == 0 {
+                        barRect.origin.y += half
+                        barRect.size.height -= half
+                        if roundingStyle == .allCorners {
+                            roundingStyle = [.bottomLeft, .bottomRight]
+                        } else if roundingStyle.contains(.topLeft)
+                            || roundingStyle.contains(.topRight) {
+                            roundingStyle = []
+                        }
+                    } else if j == dataSet.stackSize-1 {
+                        barRect.size.height -= half
+                        if roundingStyle == .allCorners {
+                            roundingStyle = [.topLeft, .topRight]
+                        } else if roundingStyle.contains(.bottomRight)
+                            || roundingStyle.contains(.bottomLeft) {
+                            roundingStyle = []
+                        }
+                    } else if j > 0, j < dataSet.stackSize-1 {
+                        barRect.origin.y += half
+                        barRect.size.height -= half*2
+                        roundingStyle = []
+                    }
+                }
+            }
+
             let path = UIBezierPath(
                 roundedRect: barRect,
-                byRoundingCorners: dataSet.cornerRoundingStyle,
+                byRoundingCorners: roundingStyle,
                 cornerRadii: CGSize(width: dataSet.cornerRoundingValue,
                                     height: dataSet.cornerRoundingValue))
             path.fill()

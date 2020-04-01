@@ -137,6 +137,9 @@ open class BarChartDataSet: BarLineScatterCandleBubbleChartDataSet, IBarChartDat
     
     // MARK: - Styling functions and accessors
 
+    /// if non-zero, stacked bars will be spaced `stackSpacing` pt apart.
+    open var stackSpacing: CGFloat = 2.0
+
     /// if non-zero, bars will be rounded according to `cornerRoundingValue` style.
     open var cornerRoundingValue: CGFloat = 0.0
 
